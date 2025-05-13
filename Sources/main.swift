@@ -26,14 +26,16 @@ struct EnergyUsageAnalyzer: ParsableCommand {
         }
         
         let sourceFile = Parser.parse(source: file)
-        let visitor = ShadowPropertyVisitor(viewMode: .sourceAccurate)
+        let visitor = BlurPropertyVisitor(viewMode: .sourceAccurate)
         visitor.walk(sourceFile)
         
         let views = visitor.getViews()
+        print(visitor.getViews())
+        
         if views.isEmpty {
-            print("No opacity modifiers found in the file.")
+            print("No blur found in the file.")
         } else {
-            print("Found opacity modifiers:")
+            print("Found blur:")
             views.forEach { print($0) }
         }
     }
