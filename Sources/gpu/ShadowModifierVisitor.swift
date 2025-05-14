@@ -1,17 +1,16 @@
 import Foundation
 import SwiftSyntax
 
-class OpacityModifierVisitor: SyntaxVisitor {
+class ShadowModifierVisitor: SyntaxVisitor, EnergyVisitable {
     
+    func analyze(_ sourceFile: SourceFileSyntax) {
+        walk(sourceFile)
+    }
     private var views: [String] = []
     
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
-           memberAccess.declName.baseName.text == "opacity",
-           let arguments = node.arguments.first?.expression.as(FloatLiteralExprSyntax.self),
-           let opacityValue = Double(arguments.literal.text),
-           opacityValue > 0.0 && opacityValue < 1.0 {
-            
+           memberAccess.declName.baseName.text == "shadow" {
             views.append(node.description)
         }
         return .visitChildren

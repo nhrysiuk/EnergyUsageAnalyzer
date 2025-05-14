@@ -27,7 +27,7 @@ struct EnergyUsageAnalyzer: ParsableCommand {
         
         let sourceFile = Parser.parse(source: file)
         let visitor = BlurPropertyVisitor(viewMode: .sourceAccurate)
-        visitor.walk(sourceFile)
+        visitor.analyze(sourceFile)
         
         let views = visitor.getViews()
         print(visitor.getViews())

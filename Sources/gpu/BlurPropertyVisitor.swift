@@ -1,7 +1,12 @@
 import Foundation
 import SwiftSyntax
 
-class BlurPropertyVisitor: SyntaxVisitor {
+class BlurPropertyVisitor: SyntaxVisitor , EnergyVisitable {
+    
+    func analyze(_ sourceFile: SourceFileSyntax) {
+        walk(sourceFile)
+    }
+    
     private var blurEffects: [String] = []
     private var blurViews: [String] = []
     private var addSubviewCalls: [String] = []
