@@ -1,0 +1,32 @@
+import Foundation
+import SwiftSyntax
+
+class ScheduledTimerStartVisitor: SyntaxVisitor, EnergyVisitable {
+    
+    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
+        walk(sourceFile)
+    }
+    
+    private var names: [String] = []
+    private var views: [String] = []
+    
+    override func visit(_ node: SequenceExprSyntax) -> SyntaxVisitorContinueKind {
+        if let method = node.elements.last?.as(FunctionCallExprSyntax.self),
+           let memberAccess = method.calledExpression.as(MemberAccessExprSyntax.self),
+           memberAccess.declName.baseName.text == "scheduledTimer" {
+            
+            if let declReference = node.elements.first?.as(DeclReferenceExprSyntax.self) {
+                names.append(declReference.baseName.text)
+            }
+        }
+        return .visitChildren
+    }
+    
+    func getViews() -> [String] {
+        return views
+    }
+    
+    func getNames() -> [String] {
+        return names
+    }
+}
