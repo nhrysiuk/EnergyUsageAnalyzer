@@ -4,7 +4,6 @@ import SwiftSyntax
 class BluetoothStopVisitor: SyntaxVisitor {
     
     private var managerNames: [String] = []
-    private var views: [String] = []
     
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
@@ -14,11 +13,7 @@ class BluetoothStopVisitor: SyntaxVisitor {
         }
         return .visitChildren
     }
-    
-    func getViews() -> [String] {
-        return views
-    }
-    
+
     func getNames() -> [String] {
         return managerNames
     }

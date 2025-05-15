@@ -14,10 +14,7 @@ class BluetoothManager: EnergyVisitable {
         
         let startNames = Set(startVisitor.getNames())
         let stopNames = Set(stopVisitor.getNames())
-        
-        print(startNames)
-        print(stopNames)
-        
+
         let unpairedManagers = startNames.subtracting(stopNames)
         
         let filteredViews = startVisitor.getViews().filter { view in
@@ -28,7 +25,6 @@ class BluetoothManager: EnergyVisitable {
             return true
         }
         
-        print("Filtered views:", filteredViews)
         views = filteredViews
         
         if !unpairedManagers.isEmpty {
