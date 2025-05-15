@@ -22,7 +22,7 @@ class DrawAllocationVisitor: SyntaxVisitor, EnergyVisitable {
     
     private func checkEachFunc(for statements: CodeBlockItemListSyntax) {
         for statement in statements {
-            if let assignment = statement.item.as(VariableDeclSyntax.self) {
+            if let _ = statement.item.as(VariableDeclSyntax.self) {
                 views.append(statement.description.trimmingCharacters(in: .whitespacesAndNewlines))
             }
         }
