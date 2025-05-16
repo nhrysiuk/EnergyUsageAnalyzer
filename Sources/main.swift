@@ -1,5 +1,3 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
 import Foundation
 import ArgumentParser
 import SwiftSyntax
@@ -26,11 +24,13 @@ struct EnergyUsageAnalyzer: ParsableCommand {
         }
         
         let sourceFile = Parser.parse(source: file)
-        let visitor = BluetoothManager()
-        visitor.analyze(sourceFile)
-        
-        let views = visitor.getViews()
-        print(visitor.getViews())
+        analyze(file: sourceFile)
+    }
+    
+    private func analyze(file: SourceFileSyntax) {
+        for visitor in Const().visitors {
+            visitor.analyze(file)
+        }
     }
 }
 
