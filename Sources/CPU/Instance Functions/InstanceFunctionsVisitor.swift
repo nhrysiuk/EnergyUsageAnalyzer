@@ -9,11 +9,33 @@ class InstanceFunctionsVisitor: SyntaxVisitor, EnergyVisitable {
     
     private var codeBlocks = [String : String]()
     
-    override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
-        if let bodyContent = node.body?.description,
-           node.modifiers.isEmpty{
-            codeBlocks[bodyContent.trimmingCharacters(in: .whitespacesAndNewlines)] = node.description.trimmingCharacters(in: .whitespacesAndNewlines)
+    override func visit(_ node: ClassDeclSyntax) -> SyntaxVisitorContinueKind {
+        let members = node.memberBlock.members
+        
+        for member in members {
+            if let funcDecl = member.decl.as(FunctionDeclSyntax.self) {
+                if let bodyContent = funcDecl.body?.description,
+                   funcDecl.modifiers.isEmpty{
+                    codeBlocks[bodyContent.trimmingCharacters(in: .whitespacesAndNewlines)] = funcDecl.description.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            }
         }
+        
+        return .visitChildren
+    }
+    
+    override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
+        let members = node.memberBlock.members
+        
+        for member in members {
+            if let funcDecl = member.decl.as(FunctionDeclSyntax.self) {
+                if let bodyContent = funcDecl.body?.description,
+                   funcDecl.modifiers.isEmpty{
+                    codeBlocks[bodyContent.trimmingCharacters(in: .whitespacesAndNewlines)] = funcDecl.description.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            }
+        }
+        
         return .visitChildren
     }
     

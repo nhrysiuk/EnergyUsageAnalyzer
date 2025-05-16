@@ -32,6 +32,9 @@ class InstancePropertiesVisitor: SyntaxVisitor, EnergyVisitable {
                 names.append("\n\(name) ")
                 names.append("\n\(name)\n")
                 names.append(" \(name)\n")
+                names.append(" \(name).")
+                names.append("\n\(name).")
+                names.append("self.\(name).")
             }
         }
     }

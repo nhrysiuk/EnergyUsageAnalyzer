@@ -6,9 +6,9 @@ class ParameterObjectVisitor: SyntaxVisitor {
     
     override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
         if node.signature.parameterClause.parameters.count > 2 {
-            print(node.description.trimmingCharacters(in: .whitespacesAndNewlines) )
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
+    
         return .visitChildren
     }
     

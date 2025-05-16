@@ -8,7 +8,9 @@ class ParameterObjectManager: EnergyVisitable {
         let visitor = ParameterObjectVisitor(viewMode: .sourceAccurate)
         visitor.walk(sourceFile)
         
-        if !visitor.getViews().isEmpty {
+        views = visitor.getViews()
+        
+        if !views.isEmpty {
             print("\nFound possible parameter objects: ")
             views.forEach { print("\($0)") }
         }

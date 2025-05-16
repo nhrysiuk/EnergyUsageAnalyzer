@@ -8,8 +8,9 @@ class DrawAllocationManager: EnergyVisitable {
         let visitor = DrawAllocationVisitor(viewMode: .sourceAccurate)
         visitor.walk(sourceFile)
         
-        if !visitor.getViews().isEmpty {
-            print("\nFound draw alloctions: ")
+        views = visitor.getViews()
+        if !views.isEmpty {
+            print("\nFound draw allocations: ")
             views.forEach { print("\($0)") }
         }
     }
