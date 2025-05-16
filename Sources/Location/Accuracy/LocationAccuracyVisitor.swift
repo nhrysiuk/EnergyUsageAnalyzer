@@ -1,7 +1,7 @@
 import SwiftSyntax
 import CoreLocation
 
-class LocationAccuracyVisitor: SyntaxVisitor, EnergyVisitable {
+class LocationAccuracyVisitor: SyntaxVisitor {
     
     private enum AccuracyProperty: String {
         case desiredAccuracy
@@ -38,10 +38,6 @@ class LocationAccuracyVisitor: SyntaxVisitor, EnergyVisitable {
     private var views: [String] = []
     private var config: AccuracyConfig = .default
     
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        walk(sourceFile)
-    }
-    
     override func visit(_ node: SequenceExprSyntax) -> SyntaxVisitorContinueKind {
         guard let memberAccess = node.elements.first?.as(MemberAccessExprSyntax.self),
               let property = AccuracyProperty(rawValue: memberAccess.declName.baseName.text),
@@ -53,10 +49,10 @@ class LocationAccuracyVisitor: SyntaxVisitor, EnergyVisitable {
         
         if let accuracyValue = accuracyValue {
             config.accuracyLevel = accuracyValue
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         } else if let distanceValue = distanceValue {
             config.distance = distanceValue
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         
         return .visitChildren

@@ -1,4 +1,3 @@
-import Foundation
 import SwiftSyntax
 
 class LocationStopManager: EnergyVisitable {
@@ -24,8 +23,6 @@ class LocationStopManager: EnergyVisitable {
             return true
         }
         
-        print(filteredUpdateViews)
-        
         let filteredSignificantViews = startVisitor.getSignificantChangesViews().filter { view in
             if let dotIndex = view.firstIndex(of: ".") {
                 let managerName = String(view.prefix(upTo: dotIndex))
@@ -33,7 +30,6 @@ class LocationStopManager: EnergyVisitable {
             }
             return true
         }
-        print(filteredSignificantViews)
         
         let filteredVisitViews = startVisitor.getVisitViews().filter { view in
             if let dotIndex = view.firstIndex(of: ".") {
@@ -43,10 +39,8 @@ class LocationStopManager: EnergyVisitable {
             return true
         }
         
-        print(filteredVisitViews)
-        
         if !unpairedUpdateManagers.isEmpty || !unpairedSignificantManagers.isEmpty || !unpairedVisitManagers.isEmpty {
-            print("Found managers that start scanning but don't stop:")
+            print("Found managers that start scanning location but don't stop:")
             filteredUpdateViews.forEach { print($0) }
             print("\n")
             filteredSignificantViews.forEach { print($0) }

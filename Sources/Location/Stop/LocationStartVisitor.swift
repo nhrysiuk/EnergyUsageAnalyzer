@@ -1,16 +1,11 @@
-import Foundation
 import SwiftSyntax
 
-class LocationStartVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class LocationStartVisitor: SyntaxVisitor {
     
     private enum LocationMethod: String {
-        case updating = "stopUpdatingLocation"
-        case significantChanges = "stopMonitoringSignificantLocationChanges"
-        case visits = "stopMonitoringVisits"
+        case updating = "startUpdatingLocation"
+        case significantChanges = "startMonitoringSignificantLocationChanges"
+        case visits = "startMonitoringVisits"
     }
     
     private var managerNames: [LocationMethod:[String]] = [
@@ -29,7 +24,7 @@ class LocationStartVisitor: SyntaxVisitor, EnergyVisitable {
         case "startUpdatingLocation":
             guard let managerName = memberAccess.base?.description.trimmingCharacters(in: .whitespacesAndNewlines) else { return .visitChildren}
             managerNames[.updating]?.append(managerName)
-            
+
             let description = node.description
             if let range = description.range(of: "^[\\s\\n]+", options: .regularExpression) {
                 updateViews.append(String(description[range.upperBound...]))
@@ -88,5 +83,15 @@ class LocationStartVisitor: SyntaxVisitor, EnergyVisitable {
     
     func getVisitNames() -> [String] {
         return managerNames[.visits] ?? []
+    }
+    
+    func hasNames() -> Bool {
+        if managerNames[.visits]!.isEmpty && managerNames[.significantChanges]!.isEmpty && managerNames[.updating]!.isEmpty {
+            return false
+        } else { return true }
+    }
+    
+    func getViews() -> [String] {
+        return updateViews + significantChangesViews + visitViews
     }
 }
