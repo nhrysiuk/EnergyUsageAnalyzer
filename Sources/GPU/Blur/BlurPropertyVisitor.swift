@@ -11,7 +11,7 @@ class BlurPropertyVisitor: SyntaxVisitor {
            let type = initializer.calledExpression.as(DeclReferenceExprSyntax.self),
            type.baseName.text == "UIBlurEffect" {
             if let binding = node.bindings.first?.pattern.as(IdentifierPatternSyntax.self) {
-                blurEffects.append(binding.identifier.text)
+                blurEffects.append(binding.identifier.text.trimmingCharacters(in: .whitespacesAndNewlines))
             }
         }
         
@@ -21,7 +21,7 @@ class BlurPropertyVisitor: SyntaxVisitor {
            let binding = node.bindings.first?.pattern.as(IdentifierPatternSyntax.self),
            let argument = initializer.arguments.first,
            blurEffects.contains(argument.expression.description) {
-            blurViews.append(binding.identifier.text)
+            blurViews.append(binding.identifier.text.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }
@@ -31,7 +31,7 @@ class BlurPropertyVisitor: SyntaxVisitor {
            memberAccess.declName.baseName.text == "addSubview",
            let argument = node.arguments.first?.expression.as(DeclReferenceExprSyntax.self),
            blurViews.contains(argument.baseName.text) {
-            addSubviewCalls.append(node.description)
+            addSubviewCalls.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }

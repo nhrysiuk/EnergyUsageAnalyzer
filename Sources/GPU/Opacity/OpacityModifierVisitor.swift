@@ -11,7 +11,7 @@ class OpacityModifierVisitor: SyntaxVisitor {
            let opacityValue = Double(arguments.literal.text),
            opacityValue > 0.0 && opacityValue < 1.0 {
             
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }

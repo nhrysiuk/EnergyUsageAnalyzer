@@ -8,9 +8,9 @@ class ShadowPropertyVisitor: SyntaxVisitor {
         if let memberAccess = node.elements.first?.as(MemberAccessExprSyntax.self),
            memberAccess.declName.baseName.text == "shadowOpacity",
            let intLiteral = node.elements.last?.as(IntegerLiteralExprSyntax.self),
-           let value = Int(intLiteral.literal.text),
+           let value = Int(intLiteral.literal.text.trimmingCharacters(in: .whitespacesAndNewlines)),
            value > 0  {
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }

@@ -3,26 +3,35 @@ import SwiftSyntax
 
 class BlurManager: EnergyVisitable {
     
-    private var views: [String] = []
-    
+    private var modifierViews: [String] = []
+    private var propertyViews: [String] = []
+
     func analyze(_ sourceFile: SourceFileSyntax) {
         let modifierVisitor = BlurModifierVisitor(viewMode: .sourceAccurate)
         modifierVisitor.walk(sourceFile)
         let propertyVisitor = BlurPropertyVisitor(viewMode: .sourceAccurate)
         propertyVisitor.walk(sourceFile)
         
-        if !modifierVisitor.getViews().isEmpty {
+        modifierViews = modifierVisitor.getViews()
+
+        propertyViews = propertyVisitor.getViews()
+        
+        if !modifierViews.isEmpty {
             print("\nFound SwiftUI blur: ")
-            views.forEach { print("\($0)") }
+            modifierViews.forEach { print("\($0)") }
         }
         
-        if !propertyVisitor.getViews().isEmpty {
+        if !propertyViews.isEmpty {
             print("\nFound UIKit blur: ")
-            views.forEach { print("\($0)") }
+            propertyViews.forEach { print("\($0)") }
         }
     }
     
-    func getViews() -> [String] {
-        views
+    func getModidierViews() -> [String] {
+        modifierViews
+    }
+    
+    func getPropertyViews() -> [String] {
+        propertyViews
     }
 }

@@ -10,7 +10,7 @@ class AlphaPropertyVisitor: SyntaxVisitor {
            let floatLiteral = node.elements.last?.as(FloatLiteralExprSyntax.self),
            let alphaValue = Double(floatLiteral.literal.text),
            alphaValue > 0.0 && alphaValue < 1.0 {
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }
