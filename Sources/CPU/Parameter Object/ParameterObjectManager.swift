@@ -9,7 +9,7 @@ class ParameterObjectManager: EnergyVisitable {
         visitor.walk(sourceFile)
         
         if !visitor.getViews().isEmpty {
-            print("Found possible parameter objects: ")
+            print("\nFound possible parameter objects: ")
             views.forEach { print("\($0)") }
         }
     }

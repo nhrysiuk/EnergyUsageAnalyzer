@@ -9,7 +9,7 @@ class DrawAllocationManager: EnergyVisitable {
         visitor.walk(sourceFile)
         
         if !visitor.getViews().isEmpty {
-            print("Found draw alloctions: ")
+            print("\nFound draw alloctions: ")
             views.forEach { print("\($0)") }
         }
     }

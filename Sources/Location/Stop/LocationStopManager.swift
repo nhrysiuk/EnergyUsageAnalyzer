@@ -40,7 +40,7 @@ class LocationStopManager: EnergyVisitable {
         }
         
         if !unpairedUpdateManagers.isEmpty || !unpairedSignificantManagers.isEmpty || !unpairedVisitManagers.isEmpty {
-            print("Found managers that start scanning location but don't stop:")
+            print("\nFound managers that start scanning location but don't stop:")
             filteredUpdateViews.forEach { print($0) }
             print("\n")
             filteredSignificantViews.forEach { print($0) }

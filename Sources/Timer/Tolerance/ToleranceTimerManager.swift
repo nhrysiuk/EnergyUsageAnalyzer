@@ -28,14 +28,14 @@ class ToleranceTimerManager: EnergyVisitable {
         
         
         if !unpairedTimers.isEmpty {
-            print("Found absence of Timer tolerance:")
+            print("\nFound absence of Timer tolerance:")
             unpairedTimers.forEach { print($0) }
         }
         
         let toleranceVisitor = ToleranceParameterVisitor(viewMode: .sourceAccurate)
         toleranceVisitor.walk(sourceFile)
         if !toleranceVisitor.getViews().isEmpty {
-            print("Found absence of Timer tolerance:")
+            print("\nFound absence of Timer tolerance:")
             toleranceVisitor.getViews().forEach { print($0) }
         }
     }

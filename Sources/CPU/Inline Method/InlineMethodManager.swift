@@ -18,7 +18,7 @@ class InlineMethodManager: EnergyVisitable {
         views = callNames.filter { defNames.contains($0.key) }.map { $0.value }
         
         if !views.isEmpty {
-            print("Found inline methods: ")
+            print("\nFound inline methods: ")
             views.forEach { print("\($0)") }
         }
     }

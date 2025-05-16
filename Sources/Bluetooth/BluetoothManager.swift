@@ -28,7 +28,7 @@ class BluetoothManager: EnergyVisitable {
         views = filteredViews
         
         if !unpairedManagers.isEmpty {
-            print("Found managers that start scanning but don't stop:")
+            print("\nFound managers that start scanning but don't stop:")
             unpairedManagers.forEach { print($0) }
         }
     }

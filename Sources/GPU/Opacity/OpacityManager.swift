@@ -12,12 +12,12 @@ class OpacityManager: EnergyVisitable {
         propertyVisitor.walk(sourceFile)
         
         if !modifierVisitor.getViews().isEmpty {
-            print("Found SwiftUI opacity: ")
+            print("\nFound SwiftUI opacity: ")
             views.forEach { print("\($0)") }
         }
         
         if !propertyVisitor.getViews().isEmpty {
-            print("Found UIKit opacity: ")
+            print("\nFound UIKit opacity: ")
             views.forEach { print("\($0)") }
         }
     }

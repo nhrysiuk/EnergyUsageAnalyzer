@@ -19,7 +19,7 @@ class LocationAccuracyManager: EnergyVisitable {
         if locationManager.hasNames() && inefficientConfigs.contains (where: { x in
             x == config
         }) {
-            print("Found inefficient location accuracy configuration:")
+            print("\nFound inefficient location accuracy configuration:")
             print("- Accuracy Level: \(config.accuracyLevel)")
             print("- Distance Filter: \(config.distance)")
             views = startVisitor.getViews()

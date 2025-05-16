@@ -12,12 +12,12 @@ class BlurManager: EnergyVisitable {
         propertyVisitor.walk(sourceFile)
         
         if !modifierVisitor.getViews().isEmpty {
-            print("Found SwiftUI blur: ")
+            print("\nFound SwiftUI blur: ")
             views.forEach { print("\($0)") }
         }
         
         if !propertyVisitor.getViews().isEmpty {
-            print("Found UIKit blur: ")
+            print("\nFound UIKit blur: ")
             views.forEach { print("\($0)") }
         }
     }

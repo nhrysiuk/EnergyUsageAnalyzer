@@ -27,7 +27,7 @@ class ScheduledTimerManager: EnergyVisitable {
         views = filteredViews
         
         if !unpairedTimers.isEmpty {
-            print("Found timers that don't stop:")
+            print("\nFound timers that don't stop:")
             unpairedTimers.forEach { print($0) }
         }
     }

@@ -12,12 +12,12 @@ class ShadowManager: EnergyVisitable {
         propertyVisitor.walk(sourceFile)
         
         if !modifierVisitor.getViews().isEmpty {
-            print("Found SwiftUI shadow: ")
+            print("\nFound SwiftUI shadow: ")
             views.forEach { print("\($0)") }
         }
         
         if !propertyVisitor.getViews().isEmpty {
-            print("Found UIKit shadow: ")
+            print("\nFound UIKit shadow: ")
             views.forEach { print("\($0)") }
         }
     }

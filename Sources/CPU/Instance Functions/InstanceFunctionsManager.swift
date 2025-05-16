@@ -22,7 +22,7 @@ class InstanceFunctionsManager: EnergyVisitable {
         views = codeBlocks.map { $0.value }
         
         if !views.isEmpty {
-            print("Found functions that can be static: ")
+            print("\nFound functions that can be static: ")
             views.forEach { print("\($0)") }
         }
     }
