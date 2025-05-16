@@ -1,11 +1,6 @@
-import Foundation
 import SwiftSyntax
 
-class ScheduledTimerStartVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class ScheduledTimerStartVisitor: SyntaxVisitor {
     
     private var names: [String] = []
     private var views: [String] = []

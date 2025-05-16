@@ -1,4 +1,3 @@
-import Foundation
 import SwiftSyntax
 
 class ScheduledTimerManager: EnergyVisitable {
@@ -14,9 +13,6 @@ class ScheduledTimerManager: EnergyVisitable {
         
         let startNames = Set(startVisitor.getNames())
         let stopNames = Set(stopVisitor.getNames())
-
-        print(startNames)
-        print(stopNames)
         
         let unpairedTimers = startNames.subtracting(stopNames)
         

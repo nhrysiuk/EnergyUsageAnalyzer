@@ -1,12 +1,8 @@
 import SwiftSyntax
 
-class ToleranceParameterVisitor: SyntaxVisitor, EnergyVisitable {
+class ToleranceParameterVisitor: SyntaxVisitor {
     
     private var views: [String] = []
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
     
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         guard let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
@@ -22,7 +18,6 @@ class ToleranceParameterVisitor: SyntaxVisitor, EnergyVisitable {
         
         if !hasToleranceParameter {
             views.append(node.description)
-            print(node.description)
         }
         
         return .visitChildren

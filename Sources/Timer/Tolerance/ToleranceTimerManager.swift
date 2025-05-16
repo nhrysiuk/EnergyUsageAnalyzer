@@ -1,4 +1,3 @@
-import Foundation
 import SwiftSyntax
 
 class ToleranceTimerManager: EnergyVisitable {
@@ -27,9 +26,17 @@ class ToleranceTimerManager: EnergyVisitable {
         
         views = filteredViews
         
+        
         if !unpairedTimers.isEmpty {
-            print("Found timers that don't stop:")
+            print("Found absence of Timer tolerance:")
             unpairedTimers.forEach { print($0) }
+        }
+        
+        let toleranceVisitor = ToleranceParameterVisitor(viewMode: .sourceAccurate)
+        toleranceVisitor.walk(sourceFile)
+        if !toleranceVisitor.getViews().isEmpty {
+            print("Found absence of Timer tolerance:")
+            toleranceVisitor.getViews().forEach { print($0) }
         }
     }
     

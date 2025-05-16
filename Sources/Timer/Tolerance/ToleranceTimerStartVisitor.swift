@@ -1,11 +1,6 @@
-import Foundation
 import SwiftSyntax
 
-class ToleranceTimerStartVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class ToleranceTimerStartVisitor: SyntaxVisitor {
     
     private var names: [String] = []
     private var views: [String] = []
@@ -33,4 +28,3 @@ class ToleranceTimerStartVisitor: SyntaxVisitor, EnergyVisitable {
         return names
     }
 }
-
