@@ -17,18 +17,19 @@ class PublishTimerManager: EnergyVisitable {
         let unpairedTimers = startNames.subtracting(stopNames)
         
         let filteredViews = startVisitor.getViews().filter { view in
-            if let dotIndex = view.firstIndex(of: ".") {
-                let managerName = String(view.prefix(upTo: dotIndex))
-                return unpairedTimers.contains(managerName)
+            for name in unpairedTimers {
+                if view.hasPrefix(name) {
+                    return true
+                }
             }
-            return true
+            return false
         }
         
         views = filteredViews
-        
+  
         if !unpairedTimers.isEmpty {
-            print("\nFound timers that don't stop:")
-            unpairedTimers.forEach { print($0) }
+            print("\nFound publish timers that don't stop:")
+            views.forEach { print($0) }
         }
     }
     

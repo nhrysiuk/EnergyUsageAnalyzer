@@ -5,30 +5,32 @@ class ScheduledTimerManager: EnergyVisitable {
     private var views: [String] = []
     
     func analyze(_ sourceFile: SourceFileSyntax) {
-        let startVisitor = PublishTimerStartVisitor(viewMode: .sourceAccurate)
+        let startVisitor = ScheduledTimerStartVisitor(viewMode: .sourceAccurate)
         startVisitor.walk(sourceFile)
         
-        let stopVisitor = PublishTimerStopVisitor(viewMode: .sourceAccurate)
+        let stopVisitor = ScheduledTimerStopVisitor(viewMode: .sourceAccurate)
         stopVisitor.walk(sourceFile)
         
         let startNames = Set(startVisitor.getNames())
         let stopNames = Set(stopVisitor.getNames())
-        
+
         let unpairedTimers = startNames.subtracting(stopNames)
         
+        
         let filteredViews = startVisitor.getViews().filter { view in
-            if let dotIndex = view.firstIndex(of: ".") {
-                let managerName = String(view.prefix(upTo: dotIndex))
-                return unpairedTimers.contains(managerName)
+            for name in unpairedTimers {
+                if view.hasPrefix("\(name) ") || view.hasPrefix("\(name)=") {
+                    return true
+                }
             }
-            return true
+            return false
         }
         
         views = filteredViews
         
         if !unpairedTimers.isEmpty {
-            print("\nFound timers that don't stop:")
-            unpairedTimers.forEach { print($0) }
+            print("\nFound scheduled timers that don't stop:")
+            views.forEach { print($0) }
         }
     }
     

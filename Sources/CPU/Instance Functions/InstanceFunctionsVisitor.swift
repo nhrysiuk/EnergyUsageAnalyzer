@@ -12,7 +12,7 @@ class InstanceFunctionsVisitor: SyntaxVisitor, EnergyVisitable {
     override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
         if let bodyContent = node.body?.description,
            node.modifiers.isEmpty{
-            codeBlocks[bodyContent] = node.description.trimmingCharacters(in: .whitespacesAndNewlines)
+            codeBlocks[bodyContent.trimmingCharacters(in: .whitespacesAndNewlines)] = node.description.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         return .visitChildren
     }

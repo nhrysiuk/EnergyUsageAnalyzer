@@ -12,6 +12,8 @@ class ToleranceParameterVisitor: SyntaxVisitor {
             return .visitChildren
         }
         
+        print(node)
+        
         let hasToleranceParameter = node.arguments.contains { argument in
             argument.label?.text == "tolerance"
         }

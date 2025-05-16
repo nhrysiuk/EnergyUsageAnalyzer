@@ -15,7 +15,7 @@ class ToleranceTimerStartVisitor: SyntaxVisitor {
            secondArg.label?.text == "repeats",
            let declReference = node.elements.first?.as(DeclReferenceExprSyntax.self) {
             names.append(declReference.baseName.text)
-            views.append(node.description)
+            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
         }
         return .visitChildren
     }

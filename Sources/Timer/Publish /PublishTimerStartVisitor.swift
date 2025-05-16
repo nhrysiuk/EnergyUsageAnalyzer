@@ -16,6 +16,7 @@ class PublishTimerStartVisitor: SyntaxVisitor {
            memberAccess3.declName.baseName.text == "publish",
            let declReference = node.elements.first?.as(DeclReferenceExprSyntax.self) {
                 names.append(declReference.baseName.text)
+                views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
             }
         
         return .visitChildren

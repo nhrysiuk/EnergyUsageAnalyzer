@@ -14,7 +14,7 @@ class InstanceFunctionsManager: EnergyVisitable {
         
         var codeBlocks = funcVisitor.getCodeBlocks()
         let propertyNames = propertiesVisitor.getNames()
-
+        
         for name in propertyNames {
             codeBlocks = codeBlocks.filter { !$0.key.contains(name) }
         }

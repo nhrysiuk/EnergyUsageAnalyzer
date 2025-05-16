@@ -13,29 +13,29 @@ class ToleranceTimerManager: EnergyVisitable {
         
         let startNames = Set(startVisitor.getNames())
         let stopNames = Set(stopVisitor.getNames())
-        
+
         let unpairedTimers = startNames.subtracting(stopNames)
-        
+    
         let filteredViews = startVisitor.getViews().filter { view in
-            if let dotIndex = view.firstIndex(of: ".") {
-                let managerName = String(view.prefix(upTo: dotIndex))
-                return unpairedTimers.contains(managerName)
+            for name in unpairedTimers {
+                if view.hasPrefix("\(name) ") || view.hasPrefix("\(name)=") {
+                    return true
+                }
             }
-            return true
+            return false
         }
         
         views = filteredViews
         
-        
         if !unpairedTimers.isEmpty {
-            print("\nFound absence of Timer tolerance:")
-            unpairedTimers.forEach { print($0) }
+            print("\nFound absence of Timer tolerance property:")
+            views.forEach { print($0) }
         }
         
         let toleranceVisitor = ToleranceParameterVisitor(viewMode: .sourceAccurate)
         toleranceVisitor.walk(sourceFile)
         if !toleranceVisitor.getViews().isEmpty {
-            print("\nFound absence of Timer tolerance:")
+            print("\nFound absence of Timer tolerance parameter:")
             toleranceVisitor.getViews().forEach { print($0) }
         }
     }

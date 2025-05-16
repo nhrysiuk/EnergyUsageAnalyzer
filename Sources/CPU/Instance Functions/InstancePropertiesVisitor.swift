@@ -20,13 +20,19 @@ class InstancePropertiesVisitor: SyntaxVisitor, EnergyVisitable {
     }
 
     func checkMemberBlockItem(_ block: MemberBlockItemSyntax) {
-        if let variable = block.decl.as(VariableDeclSyntax.self),
-           variable.modifiers.isEmpty,
-           let name = variable.bindings.first?.pattern.as(IdentifierPatternSyntax.self)?.identifier.text {
-            names.append(" \(name) ")
-            names.append("\n\(name) ")
-            names.append("\n\(name)\n")
-            names.append(" \(name)\n")
+        if let variable = block.decl.as(VariableDeclSyntax.self) {
+            for x in variable.modifiers {
+                if x.name.text == "static" {
+                    return
+                }
+            }
+            
+            if let name = variable.bindings.first?.pattern.as(IdentifierPatternSyntax.self)?.identifier.text {
+                names.append(" \(name) ")
+                names.append("\n\(name) ")
+                names.append("\n\(name)\n")
+                names.append(" \(name)\n")
+            }
         }
     }
 
