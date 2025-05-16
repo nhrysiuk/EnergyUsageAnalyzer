@@ -1,11 +1,6 @@
-import Foundation
 import SwiftSyntax
 
-class OpacityModifierVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class OpacityModifierVisitor: SyntaxVisitor {
     
     private var views: [String] = []
     

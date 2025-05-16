@@ -1,11 +1,6 @@
-import Foundation
 import SwiftSyntax
 
-class BlurModifierVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class BlurModifierVisitor: SyntaxVisitor {
     
     private var views: [String] = []
     

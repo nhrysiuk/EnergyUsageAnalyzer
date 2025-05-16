@@ -1,11 +1,7 @@
-import Foundation
 import SwiftSyntax
 
-class ShadowModifierVisitor: SyntaxVisitor, EnergyVisitable {
+class ShadowModifierVisitor: SyntaxVisitor {
     
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        walk(sourceFile)
-    }
     private var views: [String] = []
     
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {

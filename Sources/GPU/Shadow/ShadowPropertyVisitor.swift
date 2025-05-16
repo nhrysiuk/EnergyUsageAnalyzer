@@ -1,11 +1,6 @@
-import Foundation
 import SwiftSyntax
 
-class ShadowPropertyVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class ShadowPropertyVisitor: SyntaxVisitor {
     
     private var views: [String] = []
     
