@@ -1,12 +1,7 @@
-import Foundation
 import SwiftSyntax
 
-class DrawAllocationVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
-    
+class DrawAllocationVisitor: SyntaxVisitor {
+
     private var views: [String] = []
     
     override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
