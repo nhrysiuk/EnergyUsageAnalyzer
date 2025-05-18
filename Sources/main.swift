@@ -32,7 +32,7 @@ struct EnergyUsageAnalyzer: ParsableCommand {
             visitor.analyze(file)
         }
         
-        print("Analysis is done.")
+        print("\nAnalysis is done.")
     }
 }
 
