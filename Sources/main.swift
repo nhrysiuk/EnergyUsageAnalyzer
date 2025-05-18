@@ -31,6 +31,8 @@ struct EnergyUsageAnalyzer: ParsableCommand {
         for visitor in Const().visitors {
             visitor.analyze(file)
         }
+        
+        print("Analysis is done.")
     }
 }
 
