@@ -28,7 +28,7 @@ struct EnergyUsageAnalyzer: ParsableCommand {
     }
     
     private func analyze(file: SourceFileSyntax) {
-        for visitor in Const().visitors {
+        for visitor in Const().allVisitors {
             visitor.analyze(file)
         }
         
