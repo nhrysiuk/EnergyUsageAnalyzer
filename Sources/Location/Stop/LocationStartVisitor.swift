@@ -2,57 +2,44 @@ import SwiftSyntax
 
 class LocationStartVisitor: SyntaxVisitor {
     
+    private var views: [WarningMessage] = []
+    private let filePath: String
+    
+    init(filePath: String) {
+        self.filePath = filePath
+        super.init(viewMode: .all)
+    }
+    
     private enum LocationMethod: String {
         case updating = "startUpdatingLocation"
         case significantChanges = "startMonitoringSignificantLocationChanges"
         case visits = "startMonitoringVisits"
     }
     
-    private var managerNames: [LocationMethod:[String]] = [
+    private var managerNames: [LocationMethod:[(String, WarningMessage)]] = [
         .updating: [],
         .significantChanges: [],
         .visits: []
     ]
     
-    private var updateViews: [String] = []
-    private var significantChangesViews: [String] = []
-    private var visitViews: [String] = []
-    
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         guard let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self) else { return .visitChildren }
+        
+        let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+        let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found location start call without a corresponding stop. Make sure to stop it when it's no longer needed.")
+        
         switch memberAccess.declName.baseName.text {
         case "startUpdatingLocation":
             guard let managerName = memberAccess.base?.description.trimmingCharacters(in: .whitespacesAndNewlines) else { return .visitChildren}
-            managerNames[.updating]?.append(managerName)
-
-            let description = node.description
-            if let range = description.range(of: "^[\\s\\n]+", options: .regularExpression) {
-                updateViews.append(String(description[range.upperBound...]))
-            } else {
-                updateViews.append(description)
-            }
+            managerNames[.updating]?.append((managerName, warningMessage))
             
         case "startMonitoringSignificantLocationChanges":
             guard let managerName = memberAccess.base?.description.trimmingCharacters(in: .whitespacesAndNewlines) else { return .visitChildren}
-            managerNames[.significantChanges]?.append(managerName)
-
-            let description = node.description
-            if let range = description.range(of: "^[\\s\\n]+", options: .regularExpression) {
-                significantChangesViews.append(String(description[range.upperBound...]))
-            } else {
-                significantChangesViews.append(description)
-            }
+            managerNames[.significantChanges]?.append((managerName, warningMessage))
             
         case "startMonitoringVisits":
             guard let managerName = memberAccess.base?.description.trimmingCharacters(in: .whitespacesAndNewlines) else { return .visitChildren}
-            managerNames[.visits]?.append(managerName)
-
-            let description = node.description
-            if let range = description.range(of: "^[\\s\\n]+", options: .regularExpression) {
-                visitViews.append(String(description[range.upperBound...]))
-            } else {
-                visitViews.append(description)
-            }
+            managerNames[.visits]?.append((managerName, warningMessage))
             
         default:
             return .visitChildren
@@ -61,37 +48,27 @@ class LocationStartVisitor: SyntaxVisitor {
         return .visitChildren
     }
     
-    func getUpdateViews() -> [String] {
-        return updateViews
+    func getUpdateNames() -> [(String, WarningMessage)] {
+        return managerNames[.updating, default: []]
     }
     
-    func getSignificantChangesViews() -> [String] {
-        return significantChangesViews
+    func getSignificantChangesNames() -> [(String, WarningMessage)] {
+        return managerNames[.significantChanges, default: []]
     }
     
-    func getVisitViews() -> [String] {
-        return visitViews
+    func getVisitNames() -> [(String, WarningMessage)] {
+        return managerNames[.visits, default: []]
     }
     
-    func getUpdateNames() -> [String] {
-        return managerNames[.updating] ?? []
-    }
-    
-    func getSignificantChangesNames() -> [String] {
-        return managerNames[.significantChanges] ?? []
-    }
-    
-    func getVisitNames() -> [String] {
-        return managerNames[.visits] ?? []
+    func getAllWarnings() -> [WarningMessage] {
+        let a = getUpdateNames()
+        let b = getSignificantChangesNames()
+        let c = getVisitNames()
+        let allNames = a + b + c
+        return allNames.map { $0.1 }
     }
     
     func hasNames() -> Bool {
-        if managerNames[.visits]!.isEmpty && managerNames[.significantChanges]!.isEmpty && managerNames[.updating]!.isEmpty {
-            return false
-        } else { return true }
-    }
-    
-    func getViews() -> [String] {
-        return updateViews + significantChangesViews + visitViews
+        managerNames[.visits]!.isEmpty && managerNames[.significantChanges]!.isEmpty && managerNames[.updating]!.isEmpty
     }
 }

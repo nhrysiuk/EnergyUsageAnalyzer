@@ -1,13 +1,15 @@
 import Foundation
 import SwiftSyntax
 
-class InlineMethodCallVisitor: SyntaxVisitor, EnergyVisitable {
+class InlineMethodCallVisitor: SyntaxVisitor {
     
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
+    private var namesAndViews = [(String, String, WarningMessage)]()
+    private let filePath: String
+    
+    init(filePath: String) {
+        self.filePath = filePath
+        super.init(viewMode: .all)
     }
-    
-    private var namesAndViews = [String : String]()
     
     override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
         if let body = node.body,
@@ -17,12 +19,17 @@ class InlineMethodCallVisitor: SyntaxVisitor, EnergyVisitable {
            let expression = functionCall.calledExpression.as(DeclReferenceExprSyntax.self) {
             let name = expression.baseName.text.trimmingCharacters(in: .whitespacesAndNewlines)
             let description = node.description.trimmingCharacters(in: .whitespacesAndNewlines)
-            namesAndViews[name] = description
+            
+            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found inline method, consider refactoring")
+            
+            namesAndViews.append((name, description, warningMessage))
         }
+        
         return .visitChildren
     }
     
-    func getViews() -> [String : String] {
+    func getViews() ->  [(String, String, WarningMessage)] {
         return namesAndViews
     }
 }

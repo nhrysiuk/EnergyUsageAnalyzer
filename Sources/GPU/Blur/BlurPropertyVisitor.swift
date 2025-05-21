@@ -4,7 +4,13 @@ class BlurPropertyVisitor: SyntaxVisitor {
     
     private var blurEffects: [String] = []
     private var blurViews: [String] = []
-    private var addSubviewCalls: [String] = []
+    private var warnings: [WarningMessage] = []
+    private let filePath: String
+    
+    init(filePath: String) {
+        self.filePath = filePath
+        super.init(viewMode: .all)
+    }
     
     override func visit(_ node: VariableDeclSyntax) -> SyntaxVisitorContinueKind {
         if let initializer = node.bindings.first?.initializer?.value.as(FunctionCallExprSyntax.self),
@@ -31,20 +37,15 @@ class BlurPropertyVisitor: SyntaxVisitor {
            memberAccess.declName.baseName.text == "addSubview",
            let argument = node.arguments.first?.expression.as(DeclReferenceExprSyntax.self),
            blurViews.contains(argument.baseName.text) {
-            addSubviewCalls.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
+            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found blur, consider avoiding it")
+            
+            warnings.append(warningMessage)
         }
         return .visitChildren
     }
     
-    func getBlurEffects() -> [String] {
-        return blurEffects
-    }
-    
-    func getBlurViews() -> [String] {
-        return blurViews
-    }
-    
-    func getViews() -> [String] {
-        return addSubviewCalls
+    func getViews() -> [WarningMessage] {
+        warnings
     }
 }

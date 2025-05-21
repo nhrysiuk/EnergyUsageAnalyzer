@@ -2,7 +2,13 @@ import SwiftSyntax
 
 class OpacityModifierVisitor: SyntaxVisitor {
     
-    private var views: [String] = []
+    private var warnings: [WarningMessage] = []
+    private let filePath: String
+    
+    init(filePath: String) {
+        self.filePath = filePath
+        super.init(viewMode: .all)
+    }
     
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
@@ -11,12 +17,16 @@ class OpacityModifierVisitor: SyntaxVisitor {
            let opacityValue = Double(arguments.literal.text),
            opacityValue > 0.0 && opacityValue < 1.0 {
             
-            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
+            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found opacity usage, consider avoiding it")
+            
+            warnings.append(warningMessage)
         }
+        
         return .visitChildren
     }
     
-    func getViews() -> [String] {
-        return views
+    func getViews() -> [WarningMessage] {
+        return warnings
     }
 }

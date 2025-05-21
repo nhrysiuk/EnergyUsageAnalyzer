@@ -1,11 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class InstancePropertiesVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class InstancePropertiesVisitor: SyntaxVisitor {
     
     private var names = [String]()
 

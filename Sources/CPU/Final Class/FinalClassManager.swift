@@ -2,21 +2,10 @@ import SwiftSyntax
 
 class FinalClassManager: EnergyVisitable {
     
-    private var views: [String] = []
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        let visitor = FinalClassVisitor(viewMode: .sourceAccurate)
+    func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
+        let visitor = FinalClassVisitor(filePath: filePath)
         visitor.walk(sourceFile)
         
-        views = visitor.getViews()
-        
-        if !views.isEmpty {
-            print("\nFound classes that can be final instead: ")
-            views.forEach { print("\($0)") }
-        }
-    }
-    
-    func getViews() -> [String] {
-        views
+        return visitor.getViews()
     }
 }

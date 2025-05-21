@@ -3,10 +3,8 @@ import SwiftSyntax
 
 class InstanceFunctionsManager: EnergyVisitable {
     
-    private var views: [String] = []
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        let funcVisitor = InstanceFunctionsVisitor(viewMode: .sourceAccurate)
+    func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
+        let funcVisitor = InstanceFunctionsVisitor(filePath: filePath)
         funcVisitor.walk(sourceFile)
         
         let propertiesVisitor = InstancePropertiesVisitor(viewMode: .sourceAccurate)
@@ -16,18 +14,9 @@ class InstanceFunctionsManager: EnergyVisitable {
         let propertyNames = propertiesVisitor.getNames()
         
         for name in propertyNames {
-            codeBlocks = codeBlocks.filter { !$0.key.contains(name) }
+            codeBlocks = codeBlocks.filter { !$0.0.contains(name) }
         }
         
-        views = codeBlocks.map { $0.value }
-        
-        if !views.isEmpty {
-            print("\nFound functions that can be static: ")
-            views.forEach { print("\($0)") }
-        }
-    }
-    
-    func getViews() -> [String] {
-        views
+        return codeBlocks.map { $0.2 }
     }
 }

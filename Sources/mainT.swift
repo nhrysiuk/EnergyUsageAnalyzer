@@ -1,3 +1,4 @@
+/*
 import Foundation
 import ArgumentParser
 import SwiftSyntax
@@ -37,3 +38,4 @@ struct EnergyUsageAnalyzer: ParsableCommand {
 }
 
 EnergyUsageAnalyzer.main()
+*/

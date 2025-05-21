@@ -2,21 +2,10 @@ import SwiftSyntax
 
 class ParameterObjectManager: EnergyVisitable {
     
-    private var views: [String] = []
-    
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        let visitor = ParameterObjectVisitor(viewMode: .sourceAccurate)
+    func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
+        let visitor = ParameterObjectVisitor(filePath: filePath)
         visitor.walk(sourceFile)
         
-        views = visitor.getViews()
-        
-        if !views.isEmpty {
-            print("\nFound possible parameter objects: ")
-            views.forEach { print("\($0)") }
-        }
-    }
-    
-    func getViews() -> [String] {
-        views
+        return visitor.getViews()
     }
 }

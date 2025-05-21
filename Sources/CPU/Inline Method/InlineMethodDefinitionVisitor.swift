@@ -1,11 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class InlineMethodDefinitionVisitor: SyntaxVisitor, EnergyVisitable {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
+class InlineMethodDefinitionVisitor: SyntaxVisitor {
     
     private var names = [String]()
     
@@ -14,7 +10,6 @@ class InlineMethodDefinitionVisitor: SyntaxVisitor, EnergyVisitable {
         return .visitChildren
     }
 
-    
     func getNames() -> [String] {
         return names
     }

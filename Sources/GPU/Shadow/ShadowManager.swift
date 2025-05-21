@@ -5,24 +5,15 @@ class ShadowManager: EnergyVisitable {
     
     private var views: [String] = []
     
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        let modifierVisitor = ShadowModifierVisitor(viewMode: .sourceAccurate)
+    func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
+        let modifierVisitor = ShadowModifierVisitor(filePath: filePath)
         modifierVisitor.walk(sourceFile)
-        let propertyVisitor = ShadowPropertyVisitor(viewMode: .sourceAccurate)
+        let propertyVisitor = ShadowPropertyVisitor(filePath: filePath)
         propertyVisitor.walk(sourceFile)
         
-        if !modifierVisitor.getViews().isEmpty {
-            print("\nFound SwiftUI shadow: ")
-            modifierVisitor.getViews().forEach { print("\($0)") }
-        }
+        let modifierWarnings = modifierVisitor.getViews()
+        let propertyWarnings = propertyVisitor.getViews()
         
-        if !propertyVisitor.getViews().isEmpty {
-            print("\nFound UIKit shadow: ")
-            propertyVisitor.getViews().forEach { print("\($0)") }
-        }
-    }
-    
-    func getViews() -> [String] {
-        views
+        return modifierWarnings + propertyWarnings
     }
 }

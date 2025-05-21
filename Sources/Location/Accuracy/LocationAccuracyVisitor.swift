@@ -35,7 +35,16 @@ class LocationAccuracyVisitor: SyntaxVisitor {
         )
     }
     
-    private var views: [String] = []
+    private var views: [WarningMessage] = []
+    private let filePath: String
+    private var codePlacement: (line: Int, column: Int)
+    
+    init(filePath: String, codePlacement: (Int, Int)) {
+        self.filePath = filePath
+        self.codePlacement = codePlacement
+        super.init(viewMode: .all)
+    }
+    
     private var config: AccuracyConfig = .default
     
     override func visit(_ node: SequenceExprSyntax) -> SyntaxVisitorContinueKind {
@@ -47,22 +56,28 @@ class LocationAccuracyVisitor: SyntaxVisitor {
         
         let (accuracyValue, distanceValue) = property.processValue(lastElement)
         
+        let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+        
         if let accuracyValue = accuracyValue {
             config.accuracyLevel = accuracyValue
-            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
+            codePlacement = (location.line, location.column)
         } else if let distanceValue = distanceValue {
             config.distance = distanceValue
-            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
+            codePlacement = (location.line, location.column)
         }
         
         return .visitChildren
     }
     
-    func getViews() -> [String] {
+    func getViews() -> [WarningMessage] {
         return views
     }
     
     func getConfig() -> (accuracyLevel: String, distance: CLLocationDistance) {
         return (config.accuracyLevel, config.distance)
+    }
+    
+    func getLocation() -> (Int, Int) {
+        return codePlacement
     }
 }

@@ -2,8 +2,13 @@ import SwiftSyntax
 
 class ToleranceTimerStartVisitor: SyntaxVisitor {
     
-    private var names: [String] = []
-    private var views: [String] = []
+    private var warnings: [(name: String, warning: WarningMessage)] = []
+    private let filePath: String
+    
+    init(filePath: String) {
+        self.filePath = filePath
+        super.init(viewMode: .all)
+    }
     
     override func visit(_ node: SequenceExprSyntax) -> SyntaxVisitorContinueKind {
         if let funcCall = node.elements.last?.as(FunctionCallExprSyntax.self),
@@ -14,17 +19,16 @@ class ToleranceTimerStartVisitor: SyntaxVisitor {
            firstArg.label?.text == "timeInterval",
            secondArg.label?.text == "repeats",
            let declReference = node.elements.first?.as(DeclReferenceExprSyntax.self) {
-            names.append(declReference.baseName.text)
-            views.append(node.description.trimmingCharacters(in: .whitespacesAndNewlines))
+            
+            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            
+            warnings.append((declReference.baseName.text,
+                             WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found Timer that has no tolerance property")))
         }
         return .visitChildren
     }
     
-    func getViews() -> [String] {
-        return views
-    }
-    
-    func getNames() -> [String] {
-        return names
+    func getViews() -> [(name: String, warning: WarningMessage)] {
+        return warnings
     }
 }

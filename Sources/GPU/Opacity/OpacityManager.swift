@@ -3,20 +3,15 @@ import SwiftSyntax
 
 class OpacityManager: EnergyVisitable {
     
-    func analyze(_ sourceFile: SourceFileSyntax) {
-        let modifierVisitor = OpacityModifierVisitor(viewMode: .sourceAccurate)
+    func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
+        let modifierVisitor = OpacityModifierVisitor(filePath: filePath)
         modifierVisitor.walk(sourceFile)
-        let propertyVisitor = AlphaPropertyVisitor(viewMode: .sourceAccurate)
+        let propertyVisitor = AlphaPropertyVisitor(filePath: filePath)
         propertyVisitor.walk(sourceFile)
         
-        if !modifierVisitor.getViews().isEmpty {
-            print("\nFound SwiftUI opacity: ")
-            modifierVisitor.getViews().forEach { print("\($0)") }
-        }
+        let modifierWarnings = modifierVisitor.getViews()
+        let propertyWarnings = propertyVisitor.getViews()
         
-        if !propertyVisitor.getViews().isEmpty {
-            print("\nFound UIKit opacity: ")
-            propertyVisitor.getViews().forEach { print("\($0)") }
-        }
+        return modifierWarnings + propertyWarnings
     }
 }

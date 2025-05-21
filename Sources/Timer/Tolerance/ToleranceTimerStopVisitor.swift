@@ -1,11 +1,7 @@
 import SwiftSyntax
 
 class ToleranceTimerStopVisitor: SyntaxVisitor {
-    
-    func analyze(_ sourceFile: SwiftSyntax.SourceFileSyntax) {
-        walk(sourceFile)
-    }
-    
+
     private var managerNames: [String] = []
     
     override func visit(_ node: SequenceExprSyntax) -> SyntaxVisitorContinueKind {
