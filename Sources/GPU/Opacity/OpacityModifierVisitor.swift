@@ -17,7 +17,7 @@ class OpacityModifierVisitor: SyntaxVisitor {
            let opacityValue = Double(arguments.literal.text),
            opacityValue > 0.0 && opacityValue < 1.0 {
             
-            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            let location = memberAccess.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: memberAccess.root))
             let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found opacity usage, consider avoiding it")
             
             warnings.append(warningMessage)

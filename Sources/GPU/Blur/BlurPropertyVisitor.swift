@@ -38,7 +38,7 @@ class BlurPropertyVisitor: SyntaxVisitor {
            let argument = node.arguments.first?.expression.as(DeclReferenceExprSyntax.self),
            blurViews.contains(argument.baseName.text) {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found blur, consider avoiding it")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found blur usage, consider avoiding it")
             
             warnings.append(warningMessage)
         }

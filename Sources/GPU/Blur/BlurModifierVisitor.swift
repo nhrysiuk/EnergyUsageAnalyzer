@@ -14,7 +14,7 @@ class BlurModifierVisitor: SyntaxVisitor {
         if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
            memberAccess.declName.baseName.text == "blur" {
             
-            let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
+            let location = memberAccess.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: memberAccess.root))
             let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found blur, consider avoiding it")
             
             views.append(warningMessage)
