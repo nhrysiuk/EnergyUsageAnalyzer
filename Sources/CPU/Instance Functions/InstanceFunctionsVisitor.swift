@@ -32,7 +32,7 @@ class InstanceFunctionsVisitor: SyntaxVisitor {
             if let funcDecl = member.decl.as(FunctionDeclSyntax.self) {
                 if let bodyContent = funcDecl.body?.description,
                    funcDecl.modifiers.isEmpty {
-                    let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found functions that can be static")
+                    let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found functions that can be static (instance_identifier_rule)")
                     codeBlocks.append((bodyContent.trimmingCharacters(in: .whitespacesAndNewlines),  funcDecl.description.trimmingCharacters(in: .whitespacesAndNewlines), warningMessage))
                 }
             }

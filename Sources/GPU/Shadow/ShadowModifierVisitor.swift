@@ -14,7 +14,7 @@ class ShadowModifierVisitor: SyntaxVisitor {
         if let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self),
            memberAccess.declName.baseName.text == "shadow" {
             let location = memberAccess.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: memberAccess.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found shadow usage, consider avoiding it")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found shadow usage, consider avoiding it (shadow_rule)")
             
             views.append(warningMessage)
         }

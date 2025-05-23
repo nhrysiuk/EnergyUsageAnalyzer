@@ -26,7 +26,7 @@ class LocationStartVisitor: SyntaxVisitor {
         guard let memberAccess = node.calledExpression.as(MemberAccessExprSyntax.self) else { return .visitChildren }
         
         let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-        let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found location start call without a corresponding stop. Make sure to stop it when it's no longer needed.")
+        let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found location start call without a corresponding stop. Make sure to stop it when it's no longer needed (location_scanning_rule)")
         
         switch memberAccess.declName.baseName.text {
         case "startUpdatingLocation":

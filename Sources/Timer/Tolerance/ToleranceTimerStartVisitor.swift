@@ -23,7 +23,7 @@ class ToleranceTimerStartVisitor: SyntaxVisitor {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
             
             warnings.append((declReference.baseName.text,
-                             WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found Timer that has no tolerance property")))
+                             WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found Timer that has no tolerance property (tolerance_rule)")))
         }
         return .visitChildren
     }

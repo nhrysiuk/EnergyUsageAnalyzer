@@ -17,7 +17,7 @@ class ShadowPropertyVisitor: SyntaxVisitor {
            let value = Int(intLiteral.literal.text.trimmingCharacters(in: .whitespacesAndNewlines)),
            value > 0  {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found shadow usage, consider avoiding it")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found shadow usage, consider avoiding it (shadow_rule)")
             
             warnings.append(warningMessage)
         }

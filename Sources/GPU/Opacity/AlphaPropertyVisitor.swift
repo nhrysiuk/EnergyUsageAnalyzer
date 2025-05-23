@@ -17,7 +17,7 @@ class AlphaPropertyVisitor: SyntaxVisitor {
            let alphaValue = Double(floatLiteral.literal.text),
            alphaValue > 0.0 && alphaValue < 1.0 {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found opacity usage, consider avoiding it")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found opacity usage, consider avoiding it (opacity_rule)")
             
             warnings.append(warningMessage)
         }

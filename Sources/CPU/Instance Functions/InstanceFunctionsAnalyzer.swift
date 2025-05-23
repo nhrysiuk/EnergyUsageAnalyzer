@@ -3,7 +3,7 @@ import SwiftSyntax
 
 class InstanceFunctionsAnalyzer: EnergyAnalyzer {
     
-    let identifier = "instance identifier_rule"
+    let identifier = "instance_identifier_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let funcVisitor = InstanceFunctionsVisitor(filePath: filePath)

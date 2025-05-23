@@ -22,7 +22,7 @@ class LocationAccuracyAnalyzer: EnergyAnalyzer {
         
         if locationManager.hasNames() &&
             inefficientConfigs.contains (where: { $0 == config }) {
-            return [WarningMessage(filePath: filePath, line: accuracyVisitor.getLocation().0, column: accuracyVisitor.getLocation().1, message: "Found inefficient location configs: consider using desiredAccuracy = Kilometer and distanceFilter = 2^8 meters")]
+            return [WarningMessage(filePath: filePath, line: accuracyVisitor.getLocation().0, column: accuracyVisitor.getLocation().1, message: "Found inefficient location configs: consider using desiredAccuracy = Kilometer and distanceFilter = 2^8 meters (location_accuracy_rule)")]
         } else { return [] }
     }
     

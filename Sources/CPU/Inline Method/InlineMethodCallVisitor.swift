@@ -21,7 +21,7 @@ class InlineMethodCallVisitor: SyntaxVisitor {
             let description = node.description.trimmingCharacters(in: .whitespacesAndNewlines)
             
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found inline method, consider refactoring")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found inline method, consider refactoring (inline_method_rule)")
             
             namesAndViews.append((name, description, warningMessage))
         }

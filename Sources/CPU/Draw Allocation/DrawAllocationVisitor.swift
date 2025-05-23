@@ -25,7 +25,7 @@ class DrawAllocationVisitor: SyntaxVisitor {
         for statement in statements {
             if let _ = statement.item.as(VariableDeclSyntax.self) {
                 let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-                let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found draw allocation, move object initialization from draw method if possible")
+                let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found draw allocation, move object initialization from draw method if possible (draw_allocation_rule)")
                 
                 views.append(warningMessage)
             }

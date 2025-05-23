@@ -14,7 +14,7 @@ class ParameterObjectVisitor: SyntaxVisitor {
         let number = node.signature.parameterClause.parameters.count
         if number > 2 {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found \(number) arguments, consider introducing a parameter object")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found \(number) arguments, consider introducing a parameter object (parameter_rule)")
             
             views.append(warningMessage)
         }

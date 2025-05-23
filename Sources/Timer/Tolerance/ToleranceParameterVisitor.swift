@@ -28,7 +28,7 @@ class ToleranceParameterVisitor: SyntaxVisitor {
             warnings.append(WarningMessage(filePath: filePath,
                                            line: location.line,
                                            column: location.column,
-                                           message: "Found Timer that has no tolerance"))
+                                           message: "Found Timer that has no tolerance (tolerance_rule)"))
         }
         
         return .visitChildren

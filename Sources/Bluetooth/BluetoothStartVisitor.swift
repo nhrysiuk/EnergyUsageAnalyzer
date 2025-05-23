@@ -16,7 +16,7 @@ class BluetoothStartVisitor: SyntaxVisitor {
            memberAccess.declName.baseName.text == "scanForPeripherals",
            let managerName = memberAccess.base?.description.trimmingCharacters(in: .whitespacesAndNewlines) {
             let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
-            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found a Bluetooth scanning call without a corresponding stop. Make sure to stop scanning when it's no longer needed.")
+            let warningMessage = WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found a Bluetooth scanning call without a corresponding stop. Make sure to stop scanning when it's no longer needed. (bluetooth_rule)")
             warningsDictionary[managerName] = warningMessage
             
         }

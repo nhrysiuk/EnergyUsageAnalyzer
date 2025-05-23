@@ -20,7 +20,7 @@ class ScheduledTimerStartVisitor: SyntaxVisitor {
                 let location = node.startLocation(converter: SourceLocationConverter(fileName: filePath, tree: node.root))
                 
                 warnings.append((declReference.baseName.text,
-                                 WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found Timer named \(declReference.baseName.text) that doesn't stop")))
+                                 WarningMessage(filePath: filePath, line: location.line, column: location.column, message: "Found Timer named \(declReference.baseName.text) that doesn't stop (scheduled_timer_rule)")))
             }
         }
         return .visitChildren
