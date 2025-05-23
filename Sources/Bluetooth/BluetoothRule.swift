@@ -1,7 +1,9 @@
 import Foundation
 import SwiftSyntax
 
-class BluetoothManager: EnergyVisitable {
+class BluetoothRule: EnergyRule {
+    
+    let identifier = "bluetooth_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
 

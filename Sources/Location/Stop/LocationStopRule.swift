@@ -1,6 +1,8 @@
 import SwiftSyntax
 
-class LocationStopManager: EnergyVisitable {
+class LocationStopRule: EnergyRule {
+    
+    let identifier = "location_scanning_rule"
     
     private var views: [String] = []
     

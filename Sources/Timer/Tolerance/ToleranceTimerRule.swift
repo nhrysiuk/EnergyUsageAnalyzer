@@ -1,6 +1,8 @@
 import SwiftSyntax
 
-class ToleranceTimerManager: EnergyVisitable {
+class ToleranceTimerRule: EnergyRule {
+    
+    let identifier = "tolerance_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let startVisitor = ToleranceTimerStartVisitor(filePath: filePath)

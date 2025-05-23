@@ -1,7 +1,9 @@
 import SwiftSyntax
 import CoreLocation
 
-class LocationAccuracyManager: EnergyVisitable {
+class LocationAccuracyRule: EnergyRule {
+    
+    let identifier = "location_accuracy_rule"
     
     private var views: [String] = []
     

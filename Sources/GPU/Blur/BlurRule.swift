@@ -1,7 +1,9 @@
 import Foundation
 import SwiftSyntax
 
-class BlurManager: EnergyVisitable {
+class BlurRule: EnergyRule {
+    
+    let identifier = "blur_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let modifierVisitor = BlurModifierVisitor(filePath: filePath)

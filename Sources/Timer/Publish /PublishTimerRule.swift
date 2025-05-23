@@ -1,12 +1,14 @@
 import SwiftSyntax
 
-class ScheduledTimerManager: EnergyVisitable {
+class PublishTimerRule: EnergyRule {
+    
+    let identifier = "publish_timer_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
-        let startVisitor = ScheduledTimerStartVisitor(filePath: filePath)
+        let startVisitor = PublishTimerStartVisitor(filePath: filePath)
         startVisitor.walk(sourceFile)
         
-        let stopVisitor = ScheduledTimerStopVisitor(viewMode: .sourceAccurate)
+        let stopVisitor = PublishTimerStopVisitor(viewMode: .sourceAccurate)
         stopVisitor.walk(sourceFile)
         
         let startNames = startVisitor.getViews()

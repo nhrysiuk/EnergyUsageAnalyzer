@@ -1,6 +1,8 @@
 import SwiftSyntax
 
-class DrawAllocationManager: EnergyVisitable {
+class DrawAllocationRule: EnergyRule {
+    
+    let identifier = "draw_allocation_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let visitor = DrawAllocationVisitor(filePath: filePath)

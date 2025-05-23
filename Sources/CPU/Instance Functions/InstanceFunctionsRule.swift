@@ -1,7 +1,9 @@
 import Foundation
 import SwiftSyntax
 
-class InstanceFunctionsManager: EnergyVisitable {
+class InstanceFunctionsRule: EnergyRule {
+    
+    let identifier = "instance identifier_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let funcVisitor = InstanceFunctionsVisitor(filePath: filePath)

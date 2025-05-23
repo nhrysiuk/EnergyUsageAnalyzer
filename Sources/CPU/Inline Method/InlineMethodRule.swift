@@ -1,7 +1,9 @@
 import Foundation
 import SwiftSyntax
 
-class InlineMethodManager: EnergyVisitable {
+class InlineMethodRule: EnergyRule {
+    
+    let identifier = "inline_method_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
         let callVisitor = InlineMethodCallVisitor(filePath: filePath)
