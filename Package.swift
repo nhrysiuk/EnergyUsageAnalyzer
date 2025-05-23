@@ -22,6 +22,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.0.0"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "601.0.1"),
+        .package(url: "https://github.com/jpsim/Yams.git", .upToNextMajor(from: "5.3.0"))
     ],
     targets: [
         .executableTarget(
@@ -29,7 +30,8 @@ let package = Package(
             dependencies: [
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftParser", package: "swift-syntax"),
-                .product(name: "ArgumentParser", package: "swift-argument-parser")
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Yams", package: "Yams"),
             ]
         ),
         .plugin(

@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
 import SwiftParser
 import SwiftSyntax
-
+import Yams
 
 @main
 struct XcodeAnalyzer: ParsableCommand {
@@ -16,6 +16,8 @@ struct XcodeAnalyzer: ParsableCommand {
     @Option(name: .short, help: "Path to the input file to analyze")
     var inputFilePath: String
     
+    @Option(name: .long, help: "Optional path to config file")
+    var configPath: String?
     
     mutating func run() throws {
         var messages: [WarningMessage] = []
@@ -28,21 +30,22 @@ struct XcodeAnalyzer: ParsableCommand {
         }
         
         let sourceFile = Parser.parse(source: file)
-        messages = analyzed(file: sourceFile)
+        let config = loadConfiguration(from: configPath ?? "energy-analyzer.yml")
+        
+        messages = analyzed(file: sourceFile, disabledRules: config.disabledRules)
         
         let formattedMessages = messages.map { $0.format() }.joined(separator: "\n")
         print(formattedMessages)
     }
     
-    private func analyzed(file: SourceFileSyntax) -> [WarningMessage] {
+    private func analyzed(file: SourceFileSyntax, disabledRules: [String]) -> [WarningMessage] {
         var result = [[WarningMessage]]()
         
-        for visitor in Const().allVisitors {
+        for visitor in Const().getAllVisitors(disabled: disabledRules) {
             result.append(visitor.analyze(file, filePath: inputFilePath))
         }
         
         return result.flatMap { $0 }
     }
-    
 }
 

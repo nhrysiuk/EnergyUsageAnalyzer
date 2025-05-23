@@ -3,26 +3,31 @@ import Foundation
 
 @main
 struct EnergyUsageAnalyzerPlugin: BuildToolPlugin {
-    func createBuildCommands(
-        context: PluginContext,
-        target: Target
-    ) throws -> [Command] {
+    
+    func createBuildCommands(context: PluginContext, target: Target) throws -> [Command] {
         guard let target = target as? SourceModuleTarget else {
             return []
         }
         
         let swiftFiles = target.sourceFiles(withSuffix: "swift")
         
-        return try swiftFiles.map {
-            let inputPath = $0.url
+        let configURL = context.package.directoryURL.appendingPathComponent("energy-analyzer.yml")
+        
+        let configExists = FileManager.default.fileExists(atPath: configURL.path)
+        
+        
+        return try swiftFiles.map { file in
+            var args = ["-i", file.url.path]
+            if configExists {
+                args += ["--config", configURL.path]
+            }
             
             return .buildCommand(
                 displayName: "Analyzing energy consumption",
                 executable: try context.tool(named: "EnergyUsageAnalyzer").url,
-                arguments: [
-                    "-i", inputPath.path
-                ],
-                inputFiles: [inputPath.standardizedFileURL]
+                arguments: args,
+                inputFiles: [file.url] + (configExists ? [configURL] : []),
+                outputFiles: []
             )
         }
     }
@@ -38,16 +43,21 @@ extension EnergyUsageAnalyzerPlugin: XcodeBuildToolPlugin {
     ) throws -> [Command] {
         let swiftFiles = target.inputFiles.filter { $0.url.pathExtension == "swift" }
         
-        return try swiftFiles.map {
-            let inputPath = $0.url
+        let configURL = context.xcodeProject.directoryURL.appending(path: "energy-analyzer.yml")
+        let configExists = FileManager.default.fileExists(atPath: configURL.path)
+        
+        return try swiftFiles.map { file in
+            var args: [String] = ["-i", file.url.path]
+            if configExists {
+                args.append(contentsOf: ["--config-path", configURL.path])
+            }
             
             return .buildCommand(
                 displayName: "Analyzing energy consumption",
                 executable: try context.tool(named: "EnergyUsageAnalyzer").url,
-                arguments: [
-                    "-i", inputPath.path
-                ],
-                inputFiles: [inputPath.standardizedFileURL]
+                arguments: args,
+                inputFiles: [file.url] + (configExists ? [configURL] : []),
+                outputFiles: []
             )
         }
     }
