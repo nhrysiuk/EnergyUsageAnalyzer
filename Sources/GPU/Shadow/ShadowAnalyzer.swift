@@ -1,14 +1,16 @@
 import Foundation
 import SwiftSyntax
 
-class OpacityRule: EnergyRule {
+class ShadowAnalyzer: EnergyAnalyzer {
     
-    let identifier = "opacity_rule"
+    let identifier = "shadow_rule"
+    
+    private var views: [String] = []
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
-        let modifierVisitor = OpacityModifierVisitor(filePath: filePath)
+        let modifierVisitor = ShadowModifierVisitor(filePath: filePath)
         modifierVisitor.walk(sourceFile)
-        let propertyVisitor = AlphaPropertyVisitor(filePath: filePath)
+        let propertyVisitor = ShadowPropertyVisitor(filePath: filePath)
         propertyVisitor.walk(sourceFile)
         
         let modifierWarnings = modifierVisitor.getViews()

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class BluetoothRule: EnergyRule {
+class BluetoothAnalyzer: EnergyAnalyzer {
     
     let identifier = "bluetooth_rule"
     

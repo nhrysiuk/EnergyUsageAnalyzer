@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class LocationStopRule: EnergyRule {
+class LocationStopAnalyzer: EnergyAnalyzer {
     
     let identifier = "location_scanning_rule"
     

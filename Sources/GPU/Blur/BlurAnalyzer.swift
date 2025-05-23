@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class BlurRule: EnergyRule {
+class BlurAnalyzer: EnergyAnalyzer {
     
     let identifier = "blur_rule"
     

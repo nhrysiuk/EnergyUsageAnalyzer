@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class InlineMethodRule: EnergyRule {
+class InlineMethodAnalyzer: EnergyAnalyzer {
     
     let identifier = "inline_method_rule"
     

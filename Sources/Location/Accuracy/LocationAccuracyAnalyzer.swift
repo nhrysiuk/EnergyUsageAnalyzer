@@ -1,7 +1,7 @@
 import SwiftSyntax
 import CoreLocation
 
-class LocationAccuracyRule: EnergyRule {
+class LocationAccuracyAnalyzer: EnergyAnalyzer {
     
     let identifier = "location_accuracy_rule"
     

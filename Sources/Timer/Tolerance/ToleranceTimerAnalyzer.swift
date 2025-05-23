@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class ToleranceTimerRule: EnergyRule {
+class ToleranceTimerAnalyzer: EnergyAnalyzer {
     
     let identifier = "tolerance_rule"
     

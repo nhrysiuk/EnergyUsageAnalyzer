@@ -1,5 +1,9 @@
 import Foundation
 
 struct Const {
-    let allVisitors: [EnergyVisitable] = [BluetoothManager(), InlineMethodManager(), InstanceFunctionsManager(), DrawAllocationManager(), FinalClassManager(), ParameterObjectManager(), OpacityManager(), BlurManager(), ShadowManager(), LocationStopManager(), LocationAccuracyManager(), PublishTimerManager(), ScheduledTimerManager(), ToleranceTimerManager()]
+    func getAllVisitors(disabled: [String]) -> [EnergyAnalyzer] {
+        let all: [EnergyAnalyzer] = [BluetoothAnalyzer(), InlineMethodAnalyzer(), InstanceFunctionsAnalyzer(), DrawAllocationAnalyzer(), ParameterObjectAnalyzer(), OpacityAnalyzer(), BlurAnalyzer(), ShadowAnalyzer(), LocationStopAnalyzer(), LocationAccuracyAnalyzer(), PublishTimerAnalyzer(), ScheduledTimerAnalyzer(), ToleranceTimerAnalyzer()]
+        
+        return all.filter { !disabled.contains($0.identifier) }
+    }
 }
