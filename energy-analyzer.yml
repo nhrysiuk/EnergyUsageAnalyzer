@@ -1,2 +1,2 @@
 disabled_rules:
- - shadow_rule
+ - instance_identifier_rule

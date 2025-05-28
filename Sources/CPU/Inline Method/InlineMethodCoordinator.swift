@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class InlineMethodAnalyzer: EnergyAnalyzer {
+class InlineMethodCoordinator: EnergyCoordinator {
     
     let identifier = "inline_method_rule"
     
@@ -18,3 +18,4 @@ class InlineMethodAnalyzer: EnergyAnalyzer {
         return callNames.filter { defNames.contains($0.0) }.map { $0.2 }
     }
 }
+

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftSyntax
 
-class InstanceFunctionsAnalyzer: EnergyAnalyzer {
+class InstanceFunctionsCoordinator: EnergyCoordinator {
     
     let identifier = "instance_identifier_rule"
     

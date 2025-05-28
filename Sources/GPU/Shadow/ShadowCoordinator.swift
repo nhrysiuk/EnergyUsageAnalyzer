@@ -1,14 +1,16 @@
 import Foundation
 import SwiftSyntax
 
-class BlurAnalyzer: EnergyAnalyzer {
+class ShadowCoordinator: EnergyCoordinator {
     
-    let identifier = "blur_rule"
+    let identifier = "shadow_rule"
+    
+    private var views: [String] = []
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
-        let modifierVisitor = BlurModifierVisitor(filePath: filePath)
+        let modifierVisitor = ShadowModifierVisitor(filePath: filePath)
         modifierVisitor.walk(sourceFile)
-        let propertyVisitor = BlurPropertyVisitor(filePath: filePath)
+        let propertyVisitor = ShadowPropertyVisitor(filePath: filePath)
         propertyVisitor.walk(sourceFile)
         
         let modifierWarnings = modifierVisitor.getViews()

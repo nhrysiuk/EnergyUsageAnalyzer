@@ -1,7 +1,7 @@
 import SwiftSyntax
 import CoreLocation
 
-class LocationAccuracyAnalyzer: EnergyAnalyzer {
+class LocationAccuracyCoordinator: EnergyCoordinator {
     
     let identifier = "location_accuracy_rule"
     
@@ -14,6 +14,7 @@ class LocationAccuracyAnalyzer: EnergyAnalyzer {
         locationManager.walk(sourceFile)
         
         guard let codeLocation = locationManager.getAllWarnings().first else { return [] }
+        
         
         let accuracyVisitor = LocationAccuracyVisitor(filePath: filePath, codePlacement: (codeLocation.line, codeLocation.column))
         accuracyVisitor.walk(sourceFile)
@@ -30,3 +31,4 @@ class LocationAccuracyAnalyzer: EnergyAnalyzer {
         return views
     }
 }
+

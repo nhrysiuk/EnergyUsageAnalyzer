@@ -19,7 +19,7 @@ struct EnergyUsageAnalyzerPlugin: BuildToolPlugin {
         return try swiftFiles.map { file in
             var args = ["-i", file.url.path]
             if configExists {
-                args += ["--config", configURL.path]
+                args += ["-c", configURL.path]
             }
             
             return .buildCommand(
@@ -49,7 +49,7 @@ extension EnergyUsageAnalyzerPlugin: XcodeBuildToolPlugin {
         return try swiftFiles.map { file in
             var args: [String] = ["-i", file.url.path]
             if configExists {
-                args.append(contentsOf: ["--config-path", configURL.path])
+                args.append(contentsOf: ["-c", configURL.path])
             }
             
             return .buildCommand(

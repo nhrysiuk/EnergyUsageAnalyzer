@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class DrawAllocationAnalyzer: EnergyAnalyzer {
+class DrawAllocationCoordinator: EnergyCoordinator {
     
     let identifier = "draw_allocation_rule"
     

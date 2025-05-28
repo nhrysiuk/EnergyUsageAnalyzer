@@ -9,14 +9,14 @@ struct XcodeAnalyzer: ParsableCommand {
     
     @usableFromInline
     static let configuration: CommandConfiguration = CommandConfiguration(
-        commandName: "energy-analyzer",
+        commandName: "EnergyUsageAnalyzer",
         abstract: "A tool for analyzing energy usage"
     )
     
     @Option(name: .short, help: "Path to the input file to analyze")
     var inputFilePath: String
     
-    @Option(name: .long, help: "Optional path to config file")
+    @Option(name: .short, help: "Optional path to config file")
     var configPath: String?
     
     mutating func run() throws {
@@ -41,7 +41,7 @@ struct XcodeAnalyzer: ParsableCommand {
     private func analyzed(file: SourceFileSyntax, disabledRules: [String]) -> [WarningMessage] {
         var result = [[WarningMessage]]()
         
-        for visitor in Const().getAllVisitors(disabled: disabledRules) {
+        for visitor in Const().getAllCoordinators(disabled: disabledRules) {
             result.append(visitor.analyze(file, filePath: inputFilePath))
         }
         

@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class ScheduledTimerAnalyzer: EnergyAnalyzer {
+class ScheduledTimerCoordinator: EnergyCoordinator {
     
     let identifier = "scheduled_timer_rule"
     

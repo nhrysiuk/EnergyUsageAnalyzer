@@ -69,6 +69,6 @@ class LocationStartVisitor: SyntaxVisitor {
     }
     
     func hasNames() -> Bool {
-        managerNames[.visits]!.isEmpty && managerNames[.significantChanges]!.isEmpty && managerNames[.updating]!.isEmpty
+        managerNames[.visits]!.isEmpty || managerNames[.significantChanges]!.isEmpty || managerNames[.updating]!.isEmpty
     }
 }

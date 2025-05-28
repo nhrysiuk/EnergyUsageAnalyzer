@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class PublishTimerAnalyzer: EnergyAnalyzer {
+class PublishTimerCoordinator: EnergyCoordinator {
     
     let identifier = "publish_timer_rule"
     

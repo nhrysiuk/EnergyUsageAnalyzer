@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-class ParameterObjectAnalyzer: EnergyAnalyzer {
+class ParameterObjectCoordinator: EnergyCoordinator {
     
     let identifier = "parameter_rule"
     

@@ -1,14 +1,14 @@
 import Foundation
 import SwiftSyntax
 
-class OpacityAnalyzer: EnergyAnalyzer {
+class BlurCoordinator: EnergyCoordinator {
     
-    let identifier = "opacity_rule"
+    let identifier = "blur_rule"
     
     func analyze(_ sourceFile: SourceFileSyntax, filePath: String) -> [WarningMessage] {
-        let modifierVisitor = OpacityModifierVisitor(filePath: filePath)
+        let modifierVisitor = BlurModifierVisitor(filePath: filePath)
         modifierVisitor.walk(sourceFile)
-        let propertyVisitor = AlphaPropertyVisitor(filePath: filePath)
+        let propertyVisitor = BlurPropertyVisitor(filePath: filePath)
         propertyVisitor.walk(sourceFile)
         
         let modifierWarnings = modifierVisitor.getViews()

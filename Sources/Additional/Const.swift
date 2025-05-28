@@ -1,8 +1,8 @@
 import Foundation
 
 struct Const {
-    func getAllVisitors(disabled: [String]) -> [EnergyAnalyzer] {
-        let all: [EnergyAnalyzer] = [BluetoothAnalyzer(), InlineMethodAnalyzer(), InstanceFunctionsAnalyzer(), DrawAllocationAnalyzer(), ParameterObjectAnalyzer(), OpacityAnalyzer(), BlurAnalyzer(), ShadowAnalyzer(), LocationStopAnalyzer(), LocationAccuracyAnalyzer(), PublishTimerAnalyzer(), ScheduledTimerAnalyzer(), ToleranceTimerAnalyzer()]
+    func getAllCoordinators(disabled: [String]) -> [EnergyCoordinator] {
+        let all: [EnergyCoordinator] = [BluetoothCoordinator(), InlineMethodCoordinator(), InstanceFunctionsCoordinator(), DrawAllocationCoordinator(), ParameterObjectCoordinator(), OpacityCoordinator(), BlurCoordinator(), ShadowCoordinator(), LocationStopCoordinator(), LocationAccuracyCoordinator(), PublishTimerCoordinator(), ScheduledTimerCoordinator(), ToleranceTimerCoordinator()]
         
         return all.filter { !disabled.contains($0.identifier) }
     }
